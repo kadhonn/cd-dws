@@ -15,4 +15,4 @@ jobs:
       -
         name: Docker build
         run: |
-		  docker build -t chat .
+		docker build -t chat .
