@@ -33,4 +33,9 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
-          script: whoami
+          script: |
+            echo "${{secrets.GITHUB_TOKEN}}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+            docker pull docker.pkg.github.com/kadhonn/cd-dws/chat
+            docker stop chat
+            docker rm chat
+            docker run -d -p 80:3000 --name chat docker.pkg.github.com/kadhonn/cd-dws/chat
